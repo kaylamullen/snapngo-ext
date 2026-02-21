@@ -11,10 +11,7 @@ from datetime import datetime, timedelta, time, date
 import pandas as pd 
 
 import os
-from pathlib import Path
-from dotenv import load_dotenv
-env_path = Path('..') / '.env'
-load_dotenv(dotenv_path=env_path)
+helper_functions.load_env()
 
 ### ### TASK PARAMETERS ### ###
 START_HOURS = task_parameters.START_HOURS
@@ -25,7 +22,7 @@ TASK_COMP = task_parameters.TASK_COMP # in points
 TASK_LOCATION_FILE = f'data/task_locations.json'
 TASK_DESCRIPTION_FILE = f'data/task_descriptions.json'
 
-DB_NAME = os.environ['DB_NAME']
+DB_NAME = helper_functions.get_env("DB_NAME", "")
 
 ### ### HELPER FUNCTIONS ### ###
 def random_datetime(n):

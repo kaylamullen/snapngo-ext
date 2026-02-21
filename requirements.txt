@@ -1,0 +1,8 @@
+flask
+pandas
+PyMySQL
+python-dotenv
+requests
+schedule
+slack-bolt
+slack-sdk

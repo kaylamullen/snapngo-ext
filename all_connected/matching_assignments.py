@@ -10,10 +10,7 @@ import helper_functions
 from datetime import datetime
 
 import os
-from pathlib import Path
-from dotenv import load_dotenv
-env_path = Path('..') / '.env'
-load_dotenv(dotenv_path=env_path)
+helper_functions.load_env()
 
 ### ### SPECIFIC HELPER FUNCTIONS ### ###
 def read_table(db, table_name):
@@ -194,5 +191,5 @@ def match_users_and_tasks(matching_algo, db_name):
 
 
 if __name__ == '__main__':
-    db_name = os.environ['DB_NAME']
+    db_name = helper_functions.get_env("DB_NAME", "")
     match_users_and_tasks(algorithm_weighted, db_name)

@@ -11,13 +11,10 @@ import helper_functions
 from datetime import datetime
 
 import os
-from pathlib import Path
-from dotenv import load_dotenv
-env_path = Path('..') / '.env'
-load_dotenv(dotenv_path=env_path)
+helper_functions.load_env()
 
 ### ### CONSTANTS ### ###
-DB_NAME = os.environ['DB_NAME']
+DB_NAME = helper_functions.get_env("DB_NAME", "")
 
 
 def add_users(user_store):

@@ -15,10 +15,7 @@ import time
 
 
 import os
-from pathlib import Path
-from dotenv import load_dotenv
-env_path = Path('..') / '.env'
-load_dotenv(dotenv_path=env_path)
+helper_functions.load_env()
 
 import json
 import requests
@@ -35,7 +32,7 @@ from datetime import datetime, timedelta, time, date
 
 
 ### ### Control Center ### ###
-DB_NAME = os.environ['DB_NAME']
+DB_NAME = helper_functions.get_env("DB_NAME", "")
 
 START_HOURS = task_parameters.START_HOURS
 END_HOURS = task_parameters.END_HOURS
@@ -93,8 +90,8 @@ def export_table_to_csv(table_name, csv_file):
 
 
 if __name__ == "__main__":
-    # add_new_users()
-    # bot.send_messages('U05B24S3LR1', block = None, text = 'Hello world')
+    add_new_users()
+    # bot.send_messages('U080N4WDXK2', block = None, text = 'Hello world')
     export_table_to_csv('users', '../users.csv')
     export_table_to_csv('assignments', '../assignments.csv')
     export_table_to_csv('tasks', '../tasks.csv')

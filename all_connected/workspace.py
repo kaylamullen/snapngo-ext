@@ -4,15 +4,13 @@ import json
 from datetime import datetime, timedelta
 
 import os
-from pathlib import Path
-from dotenv import load_dotenv
-env_path = Path('..') / '.env'
-load_dotenv(dotenv_path=env_path)
+import helper_functions
+helper_functions.load_env()
 
 from messenger import update_tasks_expired, get_task_list
 from helper_functions import connectDB
 
-DB_NAME = os.environ['DB_NAME']
+DB_NAME = helper_functions.get_env("DB_NAME", "")
 
 
 with open('block_messages/default_btn.json', 'r') as infile:

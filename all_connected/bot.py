@@ -1,8 +1,7 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
-env_path = Path('..') / '.env'
-load_dotenv(dotenv_path=env_path)
+import helper_functions
+helper_functions.load_env()
 
 import messenger
 
@@ -19,7 +18,7 @@ import random
 
 
 ### ### CONSTANTS ### ###
-DB_NAME = os.environ['DB_NAME']
+DB_NAME = helper_functions.get_env("DB_NAME", "")
 
 EMOJI_DICT = {0: '🪴', 
                 1: '🌺', 
@@ -35,27 +34,41 @@ EMOJI_DICT = {0: '🪴',
 
 
 ## ### LOAD IN MESSAGE BLOCKS ### ###
-with open('block_messages/default_btn.json', 'r') as infile:
+BLOCK_MESSAGES_DIR = Path(__file__).resolve().parent / "block_messages"
+
+with (BLOCK_MESSAGES_DIR / "default_btn.json").open("r", encoding="utf-8") as infile:
     default_btn = json.load(infile)
 
-with open('block_messages/help_block.json', 'r') as infile:
+with (BLOCK_MESSAGES_DIR / "help_block.json").open("r", encoding="utf-8") as infile:
     info_page = json.load(infile)
 
-with open('block_messages/sample_task.json', 'r') as infile:
+with (BLOCK_MESSAGES_DIR / "sample_task.json").open("r", encoding="utf-8") as infile:
     sample_task = json.load(infile)
 
-with open('block_messages/onboarding_block.json', 'r') as infile:
+with (BLOCK_MESSAGES_DIR / "onboarding_block.json").open("r", encoding="utf-8") as infile:
     onboarding = json.load(infile)
 
-with open('block_messages/headers.json', 'r') as infile:
+with (BLOCK_MESSAGES_DIR / "headers.json").open("r", encoding="utf-8") as infile:
     block_headers = json.load(infile)
 
 
 ### ### INITIALIZE BOLT APP ### ###
-# Initialize app, socket mode handler, & client 
-app = App(token= os.environ['TASK_BOT_TOKEN'])
+# Initialize app, socket mode handler, & client
+BOT_TOKEN = helper_functions.get_env("SLACK_BOT_TOKEN") or helper_functions.get_env("TASK_BOT_TOKEN")
+if not BOT_TOKEN:
+    raise RuntimeError("SLACK_BOT_TOKEN is not set. Check your .env file.")
+
+SLACK_APP_TOKEN = helper_functions.get_env("SLACK_APP_TOKEN")
+if not SLACK_APP_TOKEN:
+    raise RuntimeError("SLACK_APP_TOKEN is not set. Check your .env file.")
+
+SIGNING_SECRET = helper_functions.get_env("TASK_BOT_SIGNING_SECRET")
+if SIGNING_SECRET:
+    app = App(token=BOT_TOKEN, signing_secret=SIGNING_SECRET)
+else:
+    app = App(token=BOT_TOKEN)
 handler = SlackRequestHandler(app)
-client = WebClient(token=os.environ['TASK_BOT_TOKEN'])
+client = WebClient(token=BOT_TOKEN)
 
 # Get the bot id
 BOT_ID = client.api_call("auth.test")['user_id']
@@ -377,7 +390,7 @@ def handle_message(payload, say):
             else:
                 print("submitted")
                 url = file['url_private_download']
-                path = get_pic(url, os.environ['TASK_BOT_TOKEN'], user_id, task_id)
+                path = get_pic(url, BOT_TOKEN, user_id, task_id)
                 if messenger.submit_task(user_id, task_id, path):
                     messenger.update_reliability(user_id)
                     say(f"We received your submission to task {task_id}. Your compensation will be secured once we checked your submission. Reply `account` for more information on your account and completed tasks.")
@@ -476,4 +489,4 @@ def handle_some_action(ack, body, logger):
 
 if __name__ == "__main__":
     # Start bolt socket handler
-    SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
+    SocketModeHandler(app, SLACK_APP_TOKEN).start()

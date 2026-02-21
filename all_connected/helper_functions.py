@@ -6,8 +6,19 @@ Description: General helper functions & environment set up for the overall Snap 
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-env_path = Path('..') / '.env'
-load_dotenv(dotenv_path=env_path)
+
+
+def load_env():
+    repo_root = Path(__file__).resolve().parent.parent
+    env_path = repo_root / '.env'
+    load_dotenv(dotenv_path=env_path)
+    return env_path
+
+
+def get_env(name, default=None):
+    if name not in os.environ:
+        load_env()
+    return os.environ.get(name, default)
 
 import pymysql
 from flask import Flask
@@ -24,11 +35,16 @@ def connectDB(dbName):
     Returns a connection object to that database. This connection should eventually
         be closed with .close()
     """
+    sql_pass = get_env("SQL_PASS")
+    if not sql_pass:
+        raise RuntimeError("SQL_PASS is not set. Check your .env file.")
+    if not dbName:
+        raise RuntimeError("DB_NAME is not set. Check your .env file.")
     # Connect to the database
     db = pymysql.connect(
         host='localhost',
         user='root', 
-        password=os.environ['SQL_PASS'], 
+        password=sql_pass, 
         db=dbName
     )
 
