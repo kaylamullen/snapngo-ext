@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "DasherLocation",
+    "slug": "DasherLocation",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "dasherlocation",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.snapngo.dasherlocation",
+       "infoPlist": {
+       "UIBackgroundModes": ["location"],
+       "NSLocationWhenInUseUsageDescription": "This app uses your location while you are on shift to match you with nearby tasks. Your location is only used while you are marked as available and on shift. This app will be used for research purposes only and will only be accessible to participants who have consented to the study.",
+       "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses your location in the background while you are marked as available to allow for algorithm matching to tasks. This app will be used for research purposes only and will only be accessible to participants who have consented to the study.",
+       "NSLocationAlwaysUsageDescription": "This app uses your location to enable real-time task matching while you are on shift. This app will be used for research purposes only and will only be accessible to participants who have consented to the study."
+   }
+
+    },
+    "android": {
+       "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "FOREGROUND_SERVICE"
+      ],
+      "foregroundService": {
+        "notificationTitle": "Snap’n Go is running",
+        "notificationBody": "Tracking location while you’re on shift."
+      },
+      "package": "com.snapngo.dasherlocation",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "backgroundColor": "#000000"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
