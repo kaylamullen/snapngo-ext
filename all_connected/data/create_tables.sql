@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS users (
     `name` VARCHAR(50),
     compensation DECIMAL(4,2) DEFAULT 0,
     reliability DECIMAL(4,2) DEFAULT 0.5,
+    latitude DECIMAL(10, 6), -- track most recent location
+    longitude DECIMAL(10, 6),
+    loc_time DATETIME, -- when location was last updated
     `status` ENUM('active', 'inactive') DEFAULT 'active',
     PRIMARY KEY (id)
 )
