@@ -11,16 +11,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.snapngo.dasherlocation",
-       "infoPlist": {
-       "UIBackgroundModes": ["location"],
-       "NSLocationWhenInUseUsageDescription": "This app uses your location while you are on shift to match you with nearby tasks. Your location is only used while you are marked as available and on shift. This app will be used for research purposes only and will only be accessible to participants who have consented to the study.",
-       "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses your location in the background while you are marked as available to allow for algorithm matching to tasks. This app will be used for research purposes only and will only be accessible to participants who have consented to the study.",
-       "NSLocationAlwaysUsageDescription": "This app uses your location to enable real-time task matching while you are on shift. This app will be used for research purposes only and will only be accessible to participants who have consented to the study."
-   }
-
+      "infoPlist": {
+        "UIBackgroundModes": ["location"],
+        "NSLocationWhenInUseUsageDescription": "This app uses your location while you are on shift to match you with nearby tasks. Your location is only used while you are marked as available and on shift. This app will be used for research purposes only and will only be accessible to participants who have consented to the study.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses your location in the background while you are marked as available to allow for algorithm matching to tasks. This app will be used for research purposes only and will only be accessible to participants who have consented to the study.",
+        "NSLocationAlwaysUsageDescription": "This app uses your location to enable real-time task matching while you are on shift. This app will be used for research purposes only and will only be accessible to participants who have consented to the study."
+      }
     },
     "android": {
-       "permissions": [
+      "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_BACKGROUND_LOCATION",
@@ -56,7 +55,9 @@
           "dark": {
             "backgroundColor": "#000000"
           }
-        },
+        }
+      ],
+      [
         "expo-location",
         {
           "locationAlwaysAndWhenInUsePermission": "This app tracks your location in the background.",

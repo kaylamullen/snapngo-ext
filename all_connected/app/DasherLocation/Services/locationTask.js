@@ -24,16 +24,18 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     const longitude = locations[0].coords.longitude;
 
     console.log(`📍 New location: ${latitude}, ${longitude}`);
-    const participantId = await AsyncStorage.getItem('participant_id');
+    const participantId = await AsyncStorage.getItem('participantId');
     // ── 3. SEND THE LOCATION TO YOUR SERVER ─────────────────────────────────
-    // Replace the URL below with your real server endpoint later.
-    // For now, webhook.site lets you see the incoming data in a browser.
-    // Go to https://webhook.site and copy your unique URL, paste it below.
+    // Replace the URL below with your real server endpoint.
+    // For development, use your computer's IP address (run `ipconfig getifaddr en0` on Mac)
+    // Example: 'http://192.168.1.100:5001/location'
+    // For production, use your deployed backend URL
     try {
-      await fetch('https://webhook.site/a3002f60-c8d1-4b55-9cdc-38bbc0e08499', {
+      await fetch('http://10.169.0.163:5001/location', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer snapngodasherlocationelakayla2026',
         },
         body: JSON.stringify({
             participant_id: participantId,
